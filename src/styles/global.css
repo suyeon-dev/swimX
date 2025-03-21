@@ -1,4 +1,8 @@
-@import "tailwindcss";
+/* src/app/layout.tsx에서 임포트하여 전체에 적용하도록 함
+- 웹 폰트 선언 파일
+- 주로 쓰는 컬러값
+- CSS 리셋이나 각종 상수 값들 */
+@import 'tailwindcss';
 
 :root {
   --background: #ffffff;
