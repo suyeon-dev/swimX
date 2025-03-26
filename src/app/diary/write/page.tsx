@@ -4,12 +4,16 @@ import { SwimFormData, swimFormSchema } from '@/schemas/logSchema';
 import { useSwimLogStore } from '@/store/useSwimLogStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+import { insertSwimLog } from '@/lib/supabase/insertSwimLog'; //삽입 함수
+// 아이콘
 import { IoLocationSharp } from 'react-icons/io5';
 import { HiOutlinePhotograph } from 'react-icons/hi';
 
 // (todo) SwimLogForm 분리
 export default function WritePage() {
-  const { setLog } = useSwimLogStore(); //setLog 함수로 전역 상태 업데이트 가능
+  const { setLog } = useSwimLogStore(); // 전역 상태 업데이트용 함수
+  const router = useRouter(); // 페이지 이동을 위한 라우터 객체
 
   // react-hook-form 사용 설정: zodResolver로 유효성 검사를 zod 기반으로 적용
   const {
@@ -21,20 +25,29 @@ export default function WritePage() {
     resolver: zodResolver(swimFormSchema), //zod 스키마와 연결
   }); //useForm 훅을 제네릭 타입과 함께 사용
 
-  // (todo) react-query로 supabase에 데이터 저장하는 mutation 정의
-
   // 폼 제출 시 실행되는 함수
-  const onSubmit = (data: SwimFormData) => {
-    setLog(data); // zustand 전역 상태 업데이트
+  const onSubmit = async (data: SwimFormData) => {
+    try {
+      // 1. zustand 전역 상태 업데이트 (현재 기록 저장)
+      setLog(data);
+
+      // 2. Supabase에 데이터 저장
+      await insertSwimLog(data);
+
+      // 3. 저장 완료 후 이동
+      router.push('/diary/archive');
+    } catch (err) {
+      alert('등록 중 오류가 발생했습니다: ' + err);
+    }
     console.log('제출된 값:', data);
   };
 
   return (
-    <div onSubmit={handleSubmit(onSubmit)}>
+    <div>
       <h1 className='text-xl'>일기를 써보자</h1>
 
       {/* (todo) SwimLogForm 분리 */}
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         {/* 상단 버튼 */}
         <div className='flex justify-end gap-2'>
           <button
