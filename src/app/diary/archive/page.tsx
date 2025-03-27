@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 
 // (todo) util로 분리
 import { format, parseISO } from 'date-fns'; //라이브러리
-import ko from 'date-fns/locale/ko'; //한국어 요일 포맷
+import { ko } from 'date-fns/locale/ko'; //한국어 요일 포맷
 
 //아이콘
 import { IoLocationSharp } from 'react-icons/io5';

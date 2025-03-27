@@ -9,6 +9,7 @@ import { insertSwimLog } from '@/lib/supabase/insertSwimLog'; //삽입 함수
 // 아이콘
 import { IoLocationSharp } from 'react-icons/io5';
 import { HiOutlinePhotograph } from 'react-icons/hi';
+import IntensitySlider from '@/components/diary/IntensitySlider';
 
 // (todo) SwimLogForm 분리
 export default function WritePage() {
@@ -19,10 +20,14 @@ export default function WritePage() {
   const {
     register, //input 요소 폼에 연결
     handleSubmit, // 폼 제출 처리 함수
-    watch, //입력값 실시간 감시
+    watch,
+    setValue, // slider에서 사용
     formState: { errors }, //유효성 검사 에러 정보
   } = useForm<SwimFormData>({
-    resolver: zodResolver(swimFormSchema), //zod 스키마와 연결
+    resolver: zodResolver(swimFormSchema), //zod 스키마와 연결,
+    defaultValues: {
+      intensity: 50, // 운동강도 '중'
+    },
   }); //useForm 훅을 제네릭 타입과 함께 사용
 
   // 폼 제출 시 실행되는 함수
@@ -41,6 +46,8 @@ export default function WritePage() {
     }
     console.log('제출된 값:', data);
   };
+
+  const intensityValue = watch('intensity');
 
   return (
     <div>
@@ -110,6 +117,7 @@ export default function WritePage() {
           <div className='flex items-center'>
             <div>
               <label>레인*</label>
+              {/* (todo) 수정해야함 build 에러 발생 */}
               <select {...register('lane')} className='select'>
                 <option value='25'>25m</option>
                 <option value='50'>50m</option>
@@ -117,20 +125,10 @@ export default function WritePage() {
             </div>
 
             <div>
-              <label>운동강도</label>
-              <input
-                {...register('intensity')}
-                type='range'
-                id='intensity'
-                list='markers'
+              <IntensitySlider
+                value={intensityValue}
+                onChange={(val) => setValue('intensity', val)} //react-hook-form에 값 반영
               />
-              <datalist id='markers'>
-                <option value='0' label='1'></option>
-                <option value='25' label='2'></option>
-                <option value='50' label='3'></option>
-                <option value='75' label='4'></option>
-                <option value='100' label='5'></option>
-              </datalist>
             </div>
           </div>
 

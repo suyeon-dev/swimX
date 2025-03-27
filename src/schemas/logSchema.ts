@@ -7,7 +7,7 @@ export const swimFormSchema = z.object({
   endTime: z.string().min(1, '종료 시간을 입력해주세요'),
   pool: z.string().optional(),
   lane: z.enum(['25', '50'], { required_error: '레인을 선택해주세요' }),
-  intensity: z.string(),
+  intensity: z.number().min(0).max(100).default(50),
   distance: z.coerce.number().min(1, '거리를 입력해주세요'),
   heartRateAvg: z.coerce.number().optional(),
   heartRateMax: z.coerce.number().optional(),

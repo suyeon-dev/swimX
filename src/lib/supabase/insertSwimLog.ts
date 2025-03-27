@@ -2,7 +2,7 @@ import { supabase } from './supabaseClient'; // supabase 클라이언트 불러�
 import { SwimFormData } from '@/schemas/logSchema'; // 폼에서 사용하는 타입 불러오기
 
 // SwimFormData 인자로 받아 Supabase에 저장하는 함수 정의
-export const insertSwimLog = async (data: SwimFormData, userId: string) => {
+export const insertSwimLog = async (data: SwimFormData) => {
   // 구조분해할당으로 데이터 추출
   const {
     date,
