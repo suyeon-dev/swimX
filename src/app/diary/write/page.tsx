@@ -26,7 +26,7 @@ export default function WritePage() {
   } = useForm<SwimFormData>({
     resolver: zodResolver(swimFormSchema), //zod 스키마와 연결,
     defaultValues: {
-      intensity: 50, // 운동강도 '중'
+      intensity: 60, // 운동강도 '중'
     },
   }); //useForm 훅을 제네릭 타입과 함께 사용
 

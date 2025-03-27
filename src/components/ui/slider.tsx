@@ -39,14 +39,17 @@ function Slider({
       <SliderPrimitive.Track
         data-slot='slider-track'
         className={cn(
-          'bg-gray-200 w-full grow overflow-hidden rounded-none data-[orientation=horizontal]:h-4 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1.5'
+          'relative bg-gray-200 w-full overflow-hidden rounded-sm data-[orientation=horizontal]:h-6 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1.5'
         )}
       >
         <SliderPrimitive.Range
           data-slot='slider-range'
           className={cn(
-            'bg-blue-500 absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full'
+            'bg-blue-500 absolute top-0 left-0 data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full'
           )}
+          style={{
+            width: `${value}%`, // value 자체가 퍼센트되도록 수정함
+          }}
         />
       </SliderPrimitive.Track>
       {Array.from({ length: _values.length }, (_, index) => (
