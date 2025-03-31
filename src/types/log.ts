@@ -11,6 +11,7 @@ export interface SwimLog {
   heartRate: { avg: number; max: number };
   pace: { minute: number; seconds: number };
   calories: number;
+  gear: string[];
 }
 
 // ------------- 운동 강도 -------------

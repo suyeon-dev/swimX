@@ -13,6 +13,7 @@ import {
 
 // 아이콘
 import { FaCircleInfo } from 'react-icons/fa6';
+import { useFormContext } from 'react-hook-form';
 
 // props 타입
 interface IntensitySliderProps {
@@ -27,12 +28,12 @@ function getIntensityLabel(value: number): string {
 }
 
 // value: 현재 운동 값
-export default function IntensitySlider({
-  value,
-  onChange,
-}: IntensitySliderProps) {
+export default function IntensitySlider() {
+  const { watch, setValue } = useFormContext();
+  const value = watch('intensity');
+
   // 현재 강도에 해당하는 라벨 상태
-  const [label, setLabel] = useState('중');
+  const [label, setLabel] = useState(getIntensityLabel(value));
 
   // 값이 바뀔 때마다 라벨 자동 갱신
   useEffect(() => {
@@ -56,7 +57,7 @@ export default function IntensitySlider({
             min={20}
             max={100}
             step={20}
-            onValueChange={(val) => onChange(val[0])}
+            onValueChange={(val) => setValue('intensity', val[0])}
             className='w-[200px] h-6'
           />
 

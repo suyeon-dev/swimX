@@ -48,7 +48,7 @@ function Slider({
             'bg-blue-500 absolute top-0 left-0 data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full'
           )}
           style={{
-            width: `${value}%`, // value 자체가 퍼센트되도록 수정함
+            width: `${value}%`, // value 자체가 퍼센트가 되도록 수정함
           }}
         />
       </SliderPrimitive.Track>
