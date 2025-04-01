@@ -65,7 +65,7 @@ export default function WritePage() {
       <FormProvider {...methods}>
         <form
           onSubmit={handleSubmit(onSubmit, (errors) => {
-            console.error('❌ 유효성 검사 실패!', errors); // ✅ 실패 로그 추가
+            console.error('유효성 검사 실패!', errors); // 실패 로그 추가
             alert('입력값을 다시 확인해주세요!');
           })}
         >
