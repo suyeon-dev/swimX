@@ -5,6 +5,7 @@ import { FaRegBell } from 'react-icons/fa6';
 import { GrLanguage } from 'react-icons/gr';
 import Navigation from './Navigation';
 import Dropdown from './Dropdown';
+import HeaderAuthSection from '../auth/HeaderAuthSection';
 
 export default function Header() {
   return (
@@ -32,7 +33,9 @@ export default function Header() {
           <button className='text-xl cursor-pointer'>
             <GrLanguage />
           </button>
-          <div className='w-8 h-8 bg-gray-200 rounded-full'></div>
+
+          {/* 인증 (로그인/로그아웃) */}
+          <HeaderAuthSection />
         </div>
 
         {/* 드롭다운 메뉴 */}
