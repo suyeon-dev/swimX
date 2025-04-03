@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import DemoLoginButton from '@/components/auth/DemoLoginButton';
 
 export default function AuthPage() {
   return (
@@ -38,9 +39,7 @@ export default function AuthPage() {
         </Button>
 
         {/* 체험하기 버튼 (테스트 계정) */}
-        <Button className='w-full h-12 text-m font-semibold bg-gray-100 text-black hover:bg-gray-200 mb-4'>
-          데모 계정으로 체험하기
-        </Button>
+        <DemoLoginButton />
 
         {/* 구분선 */}
         <div className='flex items-center my-6'>
