@@ -25,7 +25,7 @@ export default function DemoLoginButton() {
   return (
     <Button
       onClick={handleDemoLogin}
-      className='w-full h-12 text-m font-semibold bg-gray-100 text-black hover:bg-gray-200 mb-4'
+      className='w-full h-12 text-md font-semibold bg-gray-100 text-black hover:bg-gray-200 mb-4'
     >
       데모 계정으로 체험하기
     </Button>
