@@ -41,8 +41,10 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
+  // 전역 기본 설정 : signIn, signOut에 callbakcUrl이 없는 경우 fallback으로 사용됨
   pages: {
     signIn: '/auth', //로그인 페이지
+    signOut: '/',
   },
 
   secret: process.env.NEXTAUTH_SECRET, //필수
