@@ -16,10 +16,10 @@ import { FaCircleInfo } from 'react-icons/fa6';
 import { useFormContext } from 'react-hook-form';
 
 // props 타입
-interface IntensitySliderProps {
-  value: number; //현재 강도 값(0~100)
-  onChange: (val: number) => void; //값이 변경될 때 실행되는 함수
-}
+// interface IntensitySliderProps {
+//   value: number; //현재 강도 값(0~100)
+//   onChange: (val: number) => void; //값이 변경될 때 실행되는 함수
+// }
 
 // 값에 따른 강도 라벨을 반환하는 함수
 function getIntensityLabel(value: number): string {
