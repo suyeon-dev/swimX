@@ -10,13 +10,13 @@ export default function HeaderAuthSection() {
 
   return session ? (
     <Button
-      onClick={() => signOut({ callbackUrl: '/auth' })}
+      onClick={() => signOut({ callbackUrl: '/signIn' })}
       className='cursor-pointer'
     >
       로그아웃
     </Button>
   ) : (
-    <Button onClick={() => router.push('/auth')} className='cursor-pointer'>
+    <Button onClick={() => router.push('/signIn')} className='cursor-pointer'>
       로그인
     </Button>
   );
