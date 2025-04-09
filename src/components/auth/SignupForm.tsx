@@ -36,8 +36,37 @@ export default function SignUpForm() {
   } = methods;
 
   // 폼 제출 시 호출되는 함수
-  const onSubmit = (values: SignUpFormData) => {
+  const onSubmit = async (values: SignUpFormData) => {
     console.log('회원가입 정보:', values);
+
+    try {
+      const response = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password,
+          nickname: values.nickname,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        // 실패 처리 (예: 중복 이메일 등)
+        alert(result.error || '회원가입에 실패했습니다.');
+        return;
+      }
+
+      // 성공 처리
+      alert('회원가입이 완료되었습니다!');
+      window.location.href = '/signIn'; // 로그인 페이지로 이동
+    } catch (error) {
+      console.error('회원가입 에러:', error);
+      alert('서버 오류로 회원가입에 실패했습니다.');
+    }
   };
 
   const inputClass = 'w-full h-12 px-4 border border-gray-300 rounded-xl';

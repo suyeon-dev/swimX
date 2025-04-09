@@ -1,5 +1,5 @@
 import { SwimLog } from '@/types/log';
-import { supabase } from './supabaseClient'; // supabase 클라이언트 불러오기
+import { supabase } from './client'; // supabase 클라이언트 불러오기
 import { numberToTimeString } from '@/utils/format';
 // import { SwimFormData } from '@/schemas/logSchema'; // 폼에서 사용하는 타입 불러오기
 

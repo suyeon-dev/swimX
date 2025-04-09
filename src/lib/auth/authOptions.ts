@@ -2,6 +2,9 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import type { Session } from 'next-auth'; // 타입 import
 import type { JWT } from 'next-auth/jwt';
 import type { NextAuthOptions } from 'next-auth';
+import { serverSupabase } from '../api/supabase';
+import { SupabaseAdapter } from '@auth/supabase-adapter';
+import bcrypt from 'bcrypt';
 
 // Next-auth 설정 객체
 export const authOptions: NextAuthOptions = {
@@ -13,21 +16,40 @@ export const authOptions: NextAuthOptions = {
         password: { label: '비밀번호', type: 'password' },
       },
       async authorize(credentials) {
-        const { email, password } = credentials ?? {};
+        const { email, password } = credentials as {
+          email: string;
+          password: string;
+        };
 
-        // 데모 계정 인증 조건 설정 (supabase 없이 직접 비교)
-        if (email === 'demo@swimx.com' && password === 'demo1234') {
-          return {
-            id: 'demo-user',
-            name: '데모 계정',
-            email: 'demo@swimx.com',
-          };
-        }
+        // 1. 이메일로 사용자 조회
+        const { data: user } = await serverSupabase
+          .from('users')
+          .select('*')
+          .eq('email', email)
+          .single();
 
-        return null; //인증 실패
+        if (!user || !user.password) return null;
+
+        // 2. 비밀번호 비교
+        const isValid = await bcrypt.compare(password, user.password);
+        if (!isValid) return null;
+
+        // 3. 인증 성공 : 사용자 정보 반환
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.nickname ?? user.name,
+          image: user.image,
+        };
       },
     }),
   ],
+  // SupabaseAdapter 설정은 "URL + KEY" 로 전달해야 함
+  adapter: SupabaseAdapter({
+    url: process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    secret: process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  }),
+
   // 인증 성공 후 세션에 포함될 정보
   callbacks: {
     async session({ session, token }: { session: Session; token: JWT }) {
