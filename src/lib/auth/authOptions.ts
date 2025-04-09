@@ -44,11 +44,17 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  // SupabaseAdapter 설정은 "URL + KEY" 로 전달해야 함
+  // SupabaseAdapter 설정 url, secret
   adapter: SupabaseAdapter({
-    url: process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    url: process.env.SUPABASE_PROJECT_URL!,
     secret: process.env.SUPABASE_SERVICE_ROLE_KEY!,
   }),
+  secret: process.env.NEXTAUTH_SECRET, //필수
+
+  // (!) 세션을 DB에 저장하도록 설정
+  session: {
+    strategy: 'jwt', // credentials 사용 시 필수
+  },
 
   // 인증 성공 후 세션에 포함될 정보
   callbacks: {
@@ -59,12 +65,19 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+    // (!) 에러 해결
+    async jwt({ token, user }) {
+      //로그인 시 사용자 정보 토큰에 추가
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
   },
+
   // 전역 기본 설정 : signIn, signOut에 callbakcUrl이 없는 경우 fallback으로 사용됨
   pages: {
     signIn: '/signIn', //로그인 페이지
     signOut: '/signIn',
   },
-
-  secret: process.env.NEXTAUTH_SECRET, //필수
 };

@@ -8,7 +8,7 @@ export default function HeaderAuthSection() {
   const { data: session } = useSession();
   const router = useRouter();
 
-  return session ? (
+  return session?.user ? (
     <Button
       onClick={() => signOut({ callbackUrl: '/signIn' })}
       className='cursor-pointer'
