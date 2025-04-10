@@ -2,7 +2,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import type { Session } from 'next-auth'; // 타입 import
 import type { JWT } from 'next-auth/jwt';
 import type { NextAuthOptions } from 'next-auth';
-import { serverSupabase } from '../api/supabase';
+import { serverSupabase } from '../supabase/server';
 import { SupabaseAdapter } from '@auth/supabase-adapter';
 import bcrypt from 'bcrypt';
 
