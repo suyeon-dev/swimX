@@ -4,7 +4,7 @@ import type { JWT } from 'next-auth/jwt';
 import type { NextAuthOptions } from 'next-auth';
 import { serverSupabase } from '../supabase/server';
 import { SupabaseAdapter } from '@auth/supabase-adapter';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 // Next-auth 설정 객체
 export const authOptions: NextAuthOptions = {

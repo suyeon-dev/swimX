@@ -4,7 +4,6 @@ import { SwimFormData, swimFormSchema } from '@/schemas/logSchema';
 import { useSwimLogStore } from '@/store/useSwimLogStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { insertSwimLog } from '@/lib/supabase/insertSwimLog'; //삽입 함수
 // 아이콘
 import { IoLocationSharp } from 'react-icons/io5';
 import { HiOutlinePhotograph } from 'react-icons/hi';
@@ -44,8 +43,21 @@ export default function WritePage() {
       // 1. zustand 전역 상태 업데이트 (현재 기록 저장)
       setLog(newData); //그대로 저장(타입은 string 기반)
 
-      // 2. Supabase에 데이터 저장 -> 여기서 실제 DB insert처리 및 변환
-      await insertSwimLog(newData);
+      // 2. API Route로 데이터 전송
+      const res = await fetch('/api/diary', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newData), // 새로운 수영일기 데이터 전달
+      });
+
+      if (!res.ok) {
+        throw new Error('수영일기 작성 실패');
+      }
+
+      const result = await res.json();
+      console.log('등록 성공', result);
 
       // 3. 저장 완료 후 이동
       router.push('/diary/archive');
