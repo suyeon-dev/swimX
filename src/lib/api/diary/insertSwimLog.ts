@@ -1,51 +1,68 @@
-import { SwimLog } from '@/types/log';
-import { supabase } from './client'; // supabase 클라이언트 불러오기
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth/authOptions';
 import { numberToTimeString } from '@/utils/format';
-// import { SwimFormData } from '@/schemas/logSchema'; // 폼에서 사용하는 타입 불러오기
+import { SwimLog } from '@/types/log';
 
-// SwimLog 구조를 인자로 받아 Supabase에 저장하는 함수 정의
+// REST API 방식으로 Supabase에 수영일기 작성 요청
 export const insertSwimLog = async (data: SwimLog) => {
-  // 구조분해할당으로 데이터 추출
-  const {
-    date,
-    time,
-    pool,
-    lane,
-    intensity,
-    distance,
-    heartRate,
-    pace,
-    calories,
-    gear,
-  } = data;
+  // 환경변수 로딩 확인
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY as string;
 
-  // supabase에 데이터 삽입 시도
-  const { error } = await supabase.from('swim_logs').insert([
-    {
-      // Supabase 테이블 컬럼 이름에 맞춰 데이터 매핑
-      // user_id: userId,
-      date,
-      start_time: numberToTimeString(time.start),
-      end_time: numberToTimeString(time.end),
-      pool,
-      lane,
-      intensity,
-      distance,
-      heart_rate_avg: heartRate.avg,
-      heart_rate_max: heartRate.max,
-      pace_minute: pace.minute,
-      pace_seconds: pace.seconds,
-      calories,
-      gear, // 배열(string[]) 형태로 저장
-    },
-  ]);
-
-  if (error) {
-    throw new Error(error.message);
+  if (!serviceRoleKey) {
+    throw new Error('SUPABASE_SERVICE_ROLE_KEY is required');
   }
 
-  console.log('🛠 insertSupabase() payload', {
-    gear,
-    isArray: Array.isArray(gear),
-  });
+  console.log('Service Role Key loaded:', serviceRoleKey);
+
+  // 1. 로그인한 사용자 정보 가져오기
+  const session = await getServerSession(authOptions);
+
+  if (!session || !session.user?.id) {
+    throw new Error('로그인이 필요한 기능입니다.');
+  }
+
+  const userId = session.user.id;
+
+  // 2. REST API로 POST 요청
+  const res = await fetch(
+    `${process.env.SUPABASE_PROJECT_URL}/rest/v1/swim_logs`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: process.env.SUPABASE_SERVICE_ROLE_KEY!, // 서버 전용 키 (절대 클라 X)
+        Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY!}`,
+        Prefer: 'return=representation', // 삽입된 결과 반환
+      },
+      body: JSON.stringify([
+        {
+          user_id: userId,
+          date: data.date,
+          start_time: numberToTimeString(data.time.start),
+          end_time: numberToTimeString(data.time.end),
+          pool: data.pool,
+          lane: data.lane,
+          intensity: data.intensity,
+          distance: data.distance,
+          heart_rate_avg: data.heartRate.avg,
+          heart_rate_max: data.heartRate.max,
+          pace_minute: data.pace.minute,
+          pace_seconds: data.pace.seconds,
+          calories: data.calories,
+          gear: data.gear,
+        },
+      ]),
+    }
+  );
+
+  // 3. 오류 핸들링
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.message || '수영일기 작성 실패');
+  }
+
+  // 4. 성공 응답 반환
+  const result = await res.json();
+  console.log('REST insert 성공', result);
+  return result;
 };

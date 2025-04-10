@@ -1,7 +1,7 @@
 import { serverSupabase } from '@/lib/supabase/server';
 import { supabase } from '@/lib/supabase/client';
 import { NextRequest, NextResponse } from 'next/server';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 // 회원가입 API
 export async function POST(req: NextRequest) {

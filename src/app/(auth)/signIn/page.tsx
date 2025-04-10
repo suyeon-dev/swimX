@@ -1,12 +1,11 @@
 'use client';
 
 import SignInForm from '@/components/auth/SignInForm';
-import { showToast } from '@/components/common/toast';
+import { showToast } from '@/components/common/Toast';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { GoArrowUpRight } from 'react-icons/go';
-import { toast } from 'react-toastify';
 
 export default function SignInPage() {
   const searchParams = useSearchParams();
@@ -15,7 +14,6 @@ export default function SignInPage() {
   // 비로그인 사용자 접근 시 안내 문구
   useEffect(() => {
     if (message) {
-      // toast.info(message); // toast.success, toast.error 등등
       showToast.info(message);
     }
   }, [message]);
