@@ -3,7 +3,8 @@
 - 주로 쓰는 컬러값
 - CSS 리셋이나 각종 상수 값들 */
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
+@import 'react-toastify/dist/ReactToastify.css';
 
 @custom-variant dark (&:is(.dark *));
 
