@@ -23,8 +23,28 @@ export const insertSwimLog = async (data: SwimLog) => {
 
   const userId = session.user.id;
 
-  // 2. REST API로 POST 요청
-  const res = await fetch(
+  // 2-1. 일기 중복 여부 확인
+  const date = data.date;
+  const startTime = numberToTimeString(data.time.start); // "15:02:00" 형식
+
+  const checkRes = await fetch(
+    `${process.env.SUPABASE_PROJECT_URL}/rest/v1/swim_logs?user_id=eq.${userId}&date=eq.${date}&start_time=eq.${startTime}`,
+    {
+      headers: {
+        apikey: serviceRoleKey,
+        Authorization: `Bearer ${serviceRoleKey}`,
+      },
+    }
+  );
+
+  const existingLogs = await checkRes.json();
+
+  if (existingLogs.length > 0) {
+    throw new Error('이미 해당 시간대의 수영일기가 존재합니다.');
+  }
+
+  // 2-2. REST API로 POST 요청 (중복 없다면 insert)
+  const insertRes = await fetch(
     `${process.env.SUPABASE_PROJECT_URL}/rest/v1/swim_logs`,
     {
       method: 'POST',
@@ -50,19 +70,28 @@ export const insertSwimLog = async (data: SwimLog) => {
           pace_seconds: data.pace.seconds,
           calories: data.calories,
           gear: data.gear,
+          content: data.content,
+          title: data.title,
+          thumbnail_url: data.thumbnailUrl,
         },
       ]),
     }
   );
 
   // 3. 오류 핸들링
-  if (!res.ok) {
-    const error = await res.json();
-    throw new Error(error.message || '수영일기 작성 실패');
+  if (!insertRes.ok) {
+    const text = await insertRes.text();
+    console.error('Supabase 삽입 실패 응답:', text);
+
+    if (text.includes('duplicate')) {
+      throw new Error('이미 해당 시간대의 수영일기가 존재합니다.');
+    }
+
+    throw new Error('수영일기 작성 실패');
   }
 
   // 4. 성공 응답 반환
-  const result = await res.json();
+  const result = await insertRes.json();
   console.log('REST insert 성공', result);
   return result;
 };

@@ -12,6 +12,10 @@ export interface SwimLog {
   pace: { minute: number; seconds: number };
   calories: number;
   gear: string[];
+  // 텍스트 에디터 추가
+  content?: string; // tiptap HTML
+  title?: string; // 요약 제목
+  thumbnailUrl?: string | null; // 대표 이미지
 }
 
 // ------------- 운동 강도 -------------

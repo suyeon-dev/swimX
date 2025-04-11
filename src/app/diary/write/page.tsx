@@ -6,13 +6,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 // 아이콘
 import { IoLocationSharp } from 'react-icons/io5';
-import { HiOutlinePhotograph } from 'react-icons/hi';
 import IntensitySlider from '@/components/diary/IntensitySlider';
 import LaneSelector from '@/components/diary/LaneSelector';
-import { FormProvider, useForm } from 'react-hook-form';
-// import { SwimLog } from '@/types/log';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { toSwimLog } from '@/utils/format';
 import GearSelector from '@/components/diary/GearSelector';
+import Editor from '@/components/diary/Editor';
+import { Input } from '@/components/ui/input';
+import { showToast } from '@/components/common/Toast';
 
 // (todo) SwimLogForm 분리
 export default function WritePage() {
@@ -25,6 +26,10 @@ export default function WritePage() {
     defaultValues: {
       intensity: 60, // 운동강도 '중'
       gear: [], //gear 필드 초기화
+      // 일기 텍스트 에디터
+      title: '', // 문자열 초기화
+      content: '', // tiptap HTML도 기본값
+      thumbnailUrl: '', // 빈 문자열이면 controlled 유지됨
     },
   });
 
@@ -32,7 +37,7 @@ export default function WritePage() {
   const {
     register, //input 요소 폼에 연결
     handleSubmit, // 폼 제출 처리 함수
-    formState: { errors }, //유효성 검사 에러 정보
+    formState: { errors, isSubmitting }, //유효성 검사 에러 정보
   } = methods;
 
   // 폼 제출 시 실행되는 함수
@@ -53,16 +58,30 @@ export default function WritePage() {
       });
 
       if (!res.ok) {
-        throw new Error('수영일기 작성 실패');
+        const text = await res.text(); // 에러 본문 받기
+        let message = '수영일기 작성 실패';
+
+        try {
+          const parsed = JSON.parse(text); // {"error": "..."}
+          message = parsed.error || message;
+        } catch {
+          message = text; // 파싱 실패 시 원문 그대로 사용
+        }
+        // console.error('API 응답 실패:', message);
+        throw new Error(message); // 최종적으로 메시지만 throw
       }
 
       const result = await res.json();
+      showToast.success('수영일기 등록이 완료되었습니다!');
       console.log('등록 성공', result);
 
       // 3. 저장 완료 후 이동
       router.push('/diary/archive');
     } catch (err) {
-      alert('등록 중 오류가 발생했습니다: ' + err);
+      showToast.error(
+        '등록 중 오류가 발생했습니다: ' +
+          (err instanceof Error ? err.message : String(err))
+      );
     }
     console.log('제출된 값:', data);
   };
@@ -79,7 +98,7 @@ export default function WritePage() {
           <form
             onSubmit={handleSubmit(onSubmit, (errors) => {
               console.error('유효성 검사 실패!', errors); // 실패 로그 추가
-              alert('입력값을 다시 확인해주세요!');
+              showToast.error('입력값을 다시 확인해주세요!');
             })}
           >
             {/* 상단 버튼 */}
@@ -92,9 +111,10 @@ export default function WritePage() {
               </button>
               <button
                 type='submit'
+                disabled={isSubmitting}
                 className='bg-blue-500 text-white px-4 py-1 rounded cursor-pointer'
               >
-                등록
+                {isSubmitting ? '등록 중...' : '등록'}
               </button>
             </div>
 
@@ -211,39 +231,38 @@ export default function WritePage() {
               </div>
             </section>
 
-            {/* <section className='border-1 border-gray-200 rounded space-y-4 p-4 m-4'> */}
+            {/* 장비 선택 */}
             <GearSelector />
-            {/* <h2 className='text-lg font-semibold mb-2'>장비</h2> */}
-            {/* 복수 선택 가능 */}
-            {/* <div className='flex space-x-3'>
-              {['킥판', '숏핀', '롱핀', '패들', '스노클'].map((item) => (
-                <label key={item}>
-                  <input type='checkbox' value={item} {...register('gear')} />
-                  <span>{item}</span>
-                </label>
-              ))}
-            </div> */}
-            {/* </section> */}
 
             {/* 일기 */}
             <section className='border-1 border-gray-200 rounded space-y-4 p-4 m-4'>
               <h2 className='text-lg font-semibold mb-2'>일기</h2>
-              <div>(todo) 에디터 추가하기</div>
-            </section>
+              {/* 제목 - 선택 항목이지만 RHF에 연결 필요 */}
+              <Controller
+                name='title'
+                control={methods.control}
+                render={({ field }) => (
+                  <Input
+                    placeholder='제목을 입력해 주세요.'
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
+              />
 
-            {/* 사진 업로드 */}
-            <section className='border-1 border-gray-200 rounded space-y-4 p-4 m-4'>
-              <h2 className='text-lg font-semibold mb-2'>오늘의 사진</h2>
-              <div className='flex flex-col border-1 border-gray-400 border-dashed p-10 items-center justify-center'>
-                <div className='text-3xl text-gray-500'>
-                  <HiOutlinePhotograph />
-                </div>
-                <div className=' text-gray-500'>
-                  Drag and drop photos
-                  <br />
-                  or click to upload
-                </div>
-              </div>
+              {/* Tiptap 에디터 연결 */}
+              <Controller
+                name='content'
+                control={methods.control}
+                render={({ field }) => (
+                  <Editor
+                    title={methods.watch('title') ?? ''}
+                    onTitleChange={(val) => methods.setValue('title', val)} // 타이틀 연동
+                    content={field.value ?? ''} // tiptap HTML
+                    onContentChange={field.onChange} // RHF로 동기화
+                  />
+                )}
+              />
             </section>
           </form>
         </FormProvider>
