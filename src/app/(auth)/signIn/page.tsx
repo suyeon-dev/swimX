@@ -1,6 +1,6 @@
 'use client';
 
-import SignInForm from '@/components/auth/SignInForm';
+import SignInForm from '@/components/auth/SigninForm';
 import Link from 'next/link';
 import { GoArrowUpRight } from 'react-icons/go';
 
