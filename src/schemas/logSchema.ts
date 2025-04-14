@@ -28,6 +28,10 @@ export const swimFormSchema = z
     paceSeconds: z.coerce.number().optional(),
     calories: z.coerce.number().optional(),
     gear: z.array(z.string()).optional(),
+    // 일기 텍스트 에디터
+    content: z.string().optional(), // Tiptap HTML
+    title: z.string().optional(),
+    thumbnailUrl: z.string().optional(), // 대표 이미지 URL
   })
   .refine(
     (data) => {

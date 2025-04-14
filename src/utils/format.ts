@@ -55,6 +55,9 @@ export const toSwimLog = (data: SwimFormData): SwimLog => {
     },
     calories: data.calories ?? 0,
     gear: data.gear ?? [],
+    content: data.content ?? '',
+    title: data.title ?? '',
+    thumbnailUrl: data.thumbnailUrl ?? null,
   };
 };
 
@@ -72,11 +75,11 @@ const intensityToText = (value: number): string => {
   return '최상';
 };
 
-// 숫자 -> 'HH:mm' 문자열로 변환해서 supabase에 저장하기
+// 숫자 -> 'HH:mm:00' 문자열로 변환해서 supabase에 저장하기
 export const numberToTimeString = (num: number): string => {
   const hour = Math.floor(num / 100);
   const minute = num % 100;
   return `${hour.toString().padStart(2, '0')}:${minute
     .toString()
-    .padStart(2, '0')}`;
+    .padStart(2, '0')}:00`; // ← 초 단위까지 시간 포맷 맞춰서 저장
 };
