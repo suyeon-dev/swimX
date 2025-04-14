@@ -1,5 +1,5 @@
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth/options';
+import { authOptions } from '@/lib/auth/authOptions';
 import { SwimLog } from '@/types/log';
 
 // REST API 방식으로 내 수영일기만 가져오기

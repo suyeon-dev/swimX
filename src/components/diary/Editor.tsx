@@ -35,8 +35,9 @@ export default function Editor({ content, onContentChange }: Props) {
       StarterKit,
       Image, // 이미지 삽입
       ResizeImage.configure({
-        maxWidth: 500, //최대 너비(px)
-        minWidth: 100,
+        HTMLAttributes: {
+          style: 'max-width: 500px; min-width: 100px;',
+        },
       }), //이미지 사이즈 조정
       Link.configure({ openOnClick: false }), //링크 클릭 시 새 창 안 열리게 설정
     ],
@@ -85,18 +86,17 @@ export default function Editor({ content, onContentChange }: Props) {
       {/* 툴바 영역 */}
       <div className='flex gap-2 flex-wrap items-center border rounded px-2 py-1'>
         {/* Heading 버튼들 */}
-        {['1', '2', '3'].map((level) => (
+        {/* level을 number로 고정하고, as const 타입 추록 정확히 제한하기 */}
+        {([1, 2, 3] as const).map((level) => (
           <Button
             type='button'
             key={level}
             variant={
-              editor?.isActive('heading', { level: +level })
-                ? 'default'
-                : 'outline'
+              editor?.isActive('heading', { level }) ? 'default' : 'outline'
             }
             size='sm'
             onClick={() =>
-              editor?.chain().focus().toggleHeading({ level: +level }).run()
+              editor?.chain().focus().toggleHeading({ level }).run()
             }
           >
             H{level}

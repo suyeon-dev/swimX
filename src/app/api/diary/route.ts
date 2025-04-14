@@ -9,7 +9,14 @@ export async function POST(req: Request) {
     const result = await insertSwimLog(swimLogData); // 서버 사이드에서 데이터 처리
     return NextResponse.json(result); // 처리된 결과를 클라이언트로 반환
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    // 타입 검사 후 안전하게 접근
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json(
+      { error: '알 수 없는 에러 발생' },
+      { status: 500 }
+    );
   }
 }
 

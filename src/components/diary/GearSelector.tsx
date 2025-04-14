@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 const gears = ['킥판', '숏핀', '롱핀', '패들', '스노클'];
 
 export default function GearSelector() {
-  const { watch, setValue } = useFormContext();
-  const selectedGear: string[] = watch('gear') || [];
+  const { control, setValue } = useFormContext();
+  const selectedGear: string[] = useWatch({ control, name: 'gear' }) ?? [];
 
   const handleChange = (item: string) => {
     if (selectedGear.includes(item)) {

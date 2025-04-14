@@ -1,5 +1,9 @@
+'use client';
+
 import { toast } from 'react-toastify';
 import { MdCheckCircle, MdCancel, MdInfo } from 'react-icons/md';
+import { useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 export const showToast = {
   success: (msg: string) =>
@@ -18,3 +22,16 @@ export const showToast = {
       progressClassName: '!bg-blue-600 !h-4 !rounded-md',
     }),
 };
+
+export function ToastMessageHandler() {
+  const searchParams = useSearchParams();
+  const message = searchParams.get('message');
+
+  useEffect(() => {
+    if (message) {
+      showToast.info(message);
+    }
+  }, [message]);
+
+  return null;
+}

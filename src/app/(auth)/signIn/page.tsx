@@ -1,23 +1,10 @@
 'use client';
 
 import SignInForm from '@/components/auth/SignInForm';
-import { showToast } from '@/components/common/Toast';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
 import { GoArrowUpRight } from 'react-icons/go';
 
 export default function SignInPage() {
-  const searchParams = useSearchParams();
-  const message = searchParams.get('message');
-
-  // 비로그인 사용자 접근 시 안내 문구
-  useEffect(() => {
-    if (message) {
-      showToast.info(message);
-    }
-  }, [message]);
-
   return (
     <section className='flex flex-col justify-center items-center min-h-screen px-4'>
       {/* 로그인 폼 헤더 영역 */}
@@ -36,9 +23,7 @@ export default function SignInPage() {
           </Link>
         </p>
       </div>
-
       <SignInForm />
-
       {/* 회원가입 및 비밀번호 찾기 */}
       <div className='flex justify-center gap-2  text-sm mt-6 '>
         <Link href='/signUp' className='hover:underline'>
