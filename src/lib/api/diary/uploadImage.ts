@@ -27,7 +27,6 @@ export async function uploadImage(file: File): Promise<string | null> {
 
   // 4. 업로드 실패 시 처리
   if (!uploadRes.ok) {
-    console.error('업로드 실패:', await uploadRes.text());
     return null;
   }
 

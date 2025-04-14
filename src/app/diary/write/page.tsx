@@ -67,13 +67,11 @@ export default function WritePage() {
         } catch {
           message = text; // 파싱 실패 시 원문 그대로 사용
         }
-        // console.error('API 응답 실패:', message);
+
         throw new Error(message); // 최종적으로 메시지만 throw
       }
 
-      const result = await res.json();
       showToast.success('수영일기 등록이 완료되었습니다!');
-      console.log('등록 성공', result);
 
       // 3. 저장 완료 후 이동
       router.push('/diary/archive');
@@ -83,7 +81,6 @@ export default function WritePage() {
           (err instanceof Error ? err.message : String(err))
       );
     }
-    console.log('제출된 값:', data);
   };
 
   // const intensityValue = watch('intensity');
@@ -96,8 +93,7 @@ export default function WritePage() {
         {/* (todo) SwimLogForm 분리 */}
         <FormProvider {...methods}>
           <form
-            onSubmit={handleSubmit(onSubmit, (errors) => {
-              console.error('유효성 검사 실패!', errors); // 실패 로그 추가
+            onSubmit={handleSubmit(onSubmit, () => {
               showToast.error('입력값을 다시 확인해주세요!');
             })}
           >

@@ -15,6 +15,7 @@ import { SignInFormData, signInSchema } from '@/schemas/signInSchema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn } from 'next-auth/react';
+import { showToast } from '../common/Toast';
 
 export default function SignInForm() {
   // 페이지 이동에 사용
@@ -34,8 +35,6 @@ export default function SignInForm() {
 
   // 로그인 버튼 클릭 시 실행되는 함수
   const onSubmit = async (values: SignInFormData) => {
-    console.log('로그인 정보: ', values);
-
     try {
       const response = await signIn('credentials', {
         ...values, // 이메일, 비번 전달
@@ -43,15 +42,12 @@ export default function SignInForm() {
       });
 
       if (response?.error) {
-        alert('이메일 또는 비밀번호가 올바르지 않습니다.');
+        showToast.error('이메일 또는 비밀번호가 올바르지 않습니다.');
       } else {
         router.push('/');
       }
-
-      console.log('로그인 응답: ', response);
-    } catch (error) {
-      console.error('로그인 에러: ', error);
-      alert('서버 오류로 로그인에 실패했습니다.');
+    } catch {
+      showToast.error('서버 오류로 로그인에 실패했습니다.');
     }
   };
 
