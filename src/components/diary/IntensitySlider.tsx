@@ -44,7 +44,7 @@ export default function IntensitySlider() {
     <TooltipProvider>
       <div className='flex items-center gap-2'>
         {/* 운동 강도 라벨 + 텍스트 */}
-        <span className='font-medium whitespace-nowrap'>운동강도</span>
+        {/* <span className='font-medium whitespace-nowrap'>운동강도</span> */}
         <span className='text-blue-600 font-semibold w-10 flex justify-center'>
           {label}
         </span>
@@ -76,7 +76,7 @@ export default function IntensitySlider() {
           <TooltipTrigger asChild>
             <FaCircleInfo />
           </TooltipTrigger>
-          <TooltipContent side='right'>
+          <TooltipContent side='top'>
             <p className='text-sm max-w-[200px]'>
               5단계 운동강도를 선택할 수 있어요
             </p>

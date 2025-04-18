@@ -73,6 +73,8 @@ export const insertSwimLog = async (data: SwimLog) => {
           content: data.content,
           title: data.title,
           thumbnail_url: data.thumbnailUrl,
+          stroke_input_mode: data.strokeInputMode ?? null,
+          stroke_distances: data.strokeDistances ?? null,
         },
       ]),
     }
@@ -92,6 +94,6 @@ export const insertSwimLog = async (data: SwimLog) => {
 
   // 4. 성공 응답 반환
   const result = await insertRes.json();
-  console.log('REST insert 성공', result);
+  console.log('REST insert 성공!!!', result);
   return result;
 };
