@@ -2,7 +2,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth/authOptions';
 import { SwimLog } from '@/types/log';
 
-// REST API 방식으로 내 수영일기만 가져오기
+// 서버에서 로그인된 사용자의 수영일기만 가져오기
 export async function fetchUserLogs(): Promise<SwimLog[]> {
   // 1. 로그인한 사용자 정보 확인
   const session = await getServerSession(authOptions);

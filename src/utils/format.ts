@@ -2,17 +2,20 @@ import { SwimFormData } from '@/schemas/logSchema';
 import { SwimLog } from '@/types/log';
 import { addDays, differenceInMinutes, parse } from 'date-fns';
 // ------------ 총 수영시간 ------------
-// (!) hh:mm:ss 형식의 문자열을 Date 객체로 변환
+// 1. hh:mm:ss 형식의 문자열을 Date 객체로 변환
 function parseTime(time: string): Date {
   return parse(time, 'HH:mm:ss', new Date(0));
 }
 
-// 총 수영 시간을 x분 형식의 문자열로 반환
+// 2. 총 수영 시간
+// DB에서 받은 start_time / end_time (문자열) 받아 총 운동시간 계산
 export const getDurationFormat = (
-  startTime: string,
-  endTime: string
+  startTime: string | undefined,
+  endTime: string | undefined
 ): string => {
-  // 시작/종료 시간의 문자열을 date 객체로 변환
+  if (!startTime || !endTime) return '-';
+
+  // 시작, 종료 시간의 문자열을 date 객체로 변환
   const start = parseTime(startTime);
   let end = parseTime(endTime);
 
@@ -24,11 +27,11 @@ export const getDurationFormat = (
   // 두 시간의 차이를 분 단위로 계산
   const totalMinutes = differenceInMinutes(end, start);
 
-  // x분 형식으로 반환
+  // m분 형식으로 반환
   return `${totalMinutes} min`;
 };
 
-// ------------ SwimFormData -> SwimLog 구조 변환 함수 ------------
+// ------------ SwimFormData(Form) -> SwimLog 구조 변환 함수 ------------
 export const toSwimLog = (data: SwimFormData): SwimLog => {
   // lane 변환: '기타'일 경우 숫자 변환
   const lane =
@@ -50,10 +53,8 @@ export const toSwimLog = (data: SwimFormData): SwimLog => {
 
   return {
     date: data.date,
-    time: {
-      start: timeStringToNumber(data.startTime),
-      end: timeStringToNumber(data.endTime),
-    },
+    startTime: timeStringToNumber(data.startTime),
+    endTime: timeStringToNumber(data.endTime),
     pool: data.pool ?? '',
     lane,
     intensity: intensityToText(data.intensity),

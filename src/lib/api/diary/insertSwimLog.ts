@@ -25,7 +25,7 @@ export const insertSwimLog = async (data: SwimLog) => {
 
   // 2-1. 일기 중복 여부 확인
   const date = data.date;
-  const startTime = numberToTimeString(data.time.start); // "15:02:00" 형식
+  const startTime = numberToTimeString(data.startTime); // "15:02:00" 형식
 
   const checkRes = await fetch(
     `${process.env.SUPABASE_PROJECT_URL}/rest/v1/swim_logs?user_id=eq.${userId}&date=eq.${date}&start_time=eq.${startTime}`,
@@ -58,8 +58,8 @@ export const insertSwimLog = async (data: SwimLog) => {
         {
           user_id: userId,
           date: data.date,
-          start_time: numberToTimeString(data.time.start),
-          end_time: numberToTimeString(data.time.end),
+          start_time: data.startTime,
+          end_time: data.endTime,
           pool: data.pool,
           lane: data.lane,
           intensity: data.intensity,

@@ -1,15 +1,7 @@
 import { useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import Image from 'next/image';
-
-// 장비 목록 및 아이콘 이미지 매핑
-const gears = [
-  { name: '킥판', src: '/images/gears/kickboard.png' },
-  { name: '숏핀', src: '/images/gears/shortfin.png' },
-  { name: '롱핀', src: '/images/gears/longfin.png' },
-  { name: '패들', src: '/images/gears/paddle.png' },
-  { name: '스노클', src: '/images/gears/snorkel.png' },
-];
+import { GEARS } from '@/constants/gear';
 
 export default function GearSelector() {
   const { control, setValue } = useFormContext();
@@ -35,7 +27,7 @@ export default function GearSelector() {
   return (
     <section className='border border-gray-200 rounded-xl px-6 py-5 space-y-4'>
       <div className='flex flex-wrap gap-4'>
-        {gears.map(({ name, src }) => {
+        {GEARS.map(({ name, src }) => {
           const selected = selectedGear.includes(name);
           return (
             <div key={name} className='flex flex-col items-center space-y-1'>
