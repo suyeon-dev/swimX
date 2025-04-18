@@ -1,7 +1,15 @@
 import { useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
+import Image from 'next/image';
 
-const gears = ['킥판', '숏핀', '롱핀', '패들', '스노클'];
+// 장비 목록 및 아이콘 이미지 매핑
+const gears = [
+  { name: '킥판', src: '/images/gears/kickboard.png' },
+  { name: '숏핀', src: '/images/gears/shortfin.png' },
+  { name: '롱핀', src: '/images/gears/longfin.png' },
+  { name: '패들', src: '/images/gears/paddle.png' },
+  { name: '스노클', src: '/images/gears/snorkel.png' },
+];
 
 export default function GearSelector() {
   const { control, setValue } = useFormContext();
@@ -25,19 +33,30 @@ export default function GearSelector() {
   }, [selectedGear, setValue]);
 
   return (
-    <section className='border-1 border-gray-200 rounded space-y-4 p-4 m-4'>
-      <h2 className='text-lg font-semibold mb-2'>장비</h2>
+    <section className='border border-gray-200 rounded-xl px-6 py-5 space-y-4'>
       <div className='flex flex-wrap gap-4'>
-        {gears.map((item) => (
-          <label key={item} className='flex items-center gap-1'>
-            <input
-              type='checkbox'
-              checked={selectedGear.includes(item)} // 현재 선택 여부
-              onChange={() => handleChange(item)} // 수동 토글
-            />
-            {item}
-          </label>
-        ))}
+        {gears.map(({ name, src }) => {
+          const selected = selectedGear.includes(name);
+          return (
+            <div key={name} className='flex flex-col items-center space-y-1'>
+              {/* 버튼만 선택 처리 */}
+              <button
+                type='button'
+                onClick={() => handleChange(name)}
+                className={`rounded-xl w-[80px] h-[80px] flex items-center justify-center border transition-all 
+              ${
+                selected
+                  ? 'bg-blue-50 border-blue-300'
+                  : 'bg-slate-100 border-slate-200 opacity-60 hover:opacity-100'
+              }`}
+              >
+                <Image src={src} alt={name} width={40} height={40} />
+              </button>
+              {/* 텍스트는 버튼 외부 */}
+              <span>{name}</span>
+            </div>
+          );
+        })}
       </div>
     </section>
   );

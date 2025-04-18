@@ -30,10 +30,23 @@ export const getDurationFormat = (
 
 // ------------ SwimFormData -> SwimLog 구조 변환 함수 ------------
 export const toSwimLog = (data: SwimFormData): SwimLog => {
+  // lane 변환: '기타'일 경우 숫자 변환
   const lane =
     data.lane === '기타' && data.customLane
       ? Number(data.customLane)
       : Number(data.lane);
+
+  // distance 계산
+  let distance = data.distance;
+
+  // distanceMode='stroke'인 경우 strokeDistances의 합산값 계산
+  // zod에서 string -> num으로 변환해서 val의 Num 타입 보장 확실함
+  if (data.distanceMode === 'stroke' && data.strokeDistances) {
+    distance = Object.values(data.strokeDistances).reduce(
+      (sum, val) => sum + val,
+      0
+    );
+  }
 
   return {
     date: data.date,
@@ -44,7 +57,10 @@ export const toSwimLog = (data: SwimFormData): SwimLog => {
     pool: data.pool ?? '',
     lane,
     intensity: intensityToText(data.intensity),
-    distance: data.distance,
+    distanceMode: data.distanceMode,
+    distance, // 총거리 입력값 or stroke 합산값
+    strokeInputMode: data.strokeInputMode,
+    strokeDistances: data.strokeDistances ?? undefined,
     heartRate: {
       avg: data.heartRateAvg ?? 0,
       max: data.heartRateMax ?? 0,

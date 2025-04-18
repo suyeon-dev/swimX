@@ -23,7 +23,6 @@ export default function LaneSelector() {
 
   return (
     <div className='flex items-center gap-4'>
-      <label className=' w-14'>레인</label>
       <ToggleGroup
         type='single'
         value={selectedLane}

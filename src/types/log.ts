@@ -3,20 +3,37 @@
 // ------------- 개인 기록 -------------
 export interface SwimLog {
   date: string;
-  time: { start: number; end: number };
+  time: { start: number; end: number }; //timestamp
   pool: string;
   lane: number;
   intensity: string;
-  distance: number;
-  heartRate: { avg: number; max: number };
-  pace: { minute: number; seconds: number };
-  calories: number;
-  gear: string[];
+  // 거리 관련
+  distanceMode: 'total' | 'stroke';
+  distance?: number; // 총거리 입력값(total) or 계산 결과(stroke)
+  strokeInputMode?: 'manual' | 'lap';
+  strokeDistances?: Partial<Record<StrokeType, number>>; // 자유형, 접영 등
+  // 선택 항목 (건강데이터)
+  heartRate?: { avg?: number; max?: number };
+  pace?: { minute?: number; seconds?: number };
+  calories?: number;
+  gear?: string[];
   // 텍스트 에디터 추가
   content?: string; // tiptap HTML
   title?: string; // 요약 제목
   thumbnailUrl?: string | null; // 대표 이미지
 }
+
+// ------------- 영법 타입 -------------
+export const STROKE_TYPES = [
+  'butterfly',
+  'backstroke',
+  'breaststroke',
+  'freestyle',
+  'kick',
+  'etc',
+] as const;
+
+export type StrokeType = (typeof STROKE_TYPES)[number];
 
 // ------------- 운동 강도 -------------
 export interface IntensityLevel {
