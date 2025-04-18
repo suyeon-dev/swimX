@@ -1,9 +1,10 @@
 // 수영 일기
 
-// ------------- 개인 기록 -------------
+// ------------- 개인 기록 (DB 저장용)-------------
 export interface SwimLog {
   date: string;
-  time: { start: number; end: number }; //timestamp
+  startTime: number;
+  endTime: number;
   pool: string;
   lane: number;
   intensity: string;
