@@ -22,8 +22,4 @@ export default function HeaderAuthSection() {
   );
 }
 
-{
-  /* <div className='w-8 h-8 bg-gray-200 rounded-full'></div> */
-}
-
 // useRouter() AppRouter 전용 훅으로 클라이언트 측 라우팅 수행 -> 새로고침 없이 페이지 전환 가능
