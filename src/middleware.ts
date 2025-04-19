@@ -15,8 +15,14 @@ export async function middleware(req: NextRequest) {
   );
   if (!isProtected) return NextResponse.next();
 
+  const isDev = process.env.NODE_ENV !== 'production';
+
   // 로그인 여부 확인
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  const token = await getToken({
+    req,
+    secret: process.env.NEXTAUTH_SECRET,
+    secureCookie: !isDev && req.nextUrl.protocol === 'https:', // https일 때만 secure 쿠키 사용
+  });
 
   // 비로그인 사용자 로그인 페이지로 리디렉션 + 안내 문구
   if (!token) {
@@ -33,7 +39,7 @@ export async function middleware(req: NextRequest) {
 export const config = {
   matcher: [
     '/dashboard/:path*',
-    '/diary/:path*',
+    '/diary/archive/:path*',
     '/map/:path*',
     '/community/:path*',
   ],

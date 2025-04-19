@@ -1,12 +1,19 @@
 'use client';
 
 import SignInForm from '@/components/auth/SignInForm';
+import { ToastMessageHandler } from '@/components/common/Toast';
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { GoArrowUpRight } from 'react-icons/go';
 
 export default function SignInPage() {
   return (
     <section className='flex flex-col justify-center items-center min-h-screen px-4'>
+      {/* CSR 관련 훅은 Suspense로 감싸야 안전 */}
+      <Suspense fallback={null}>
+        <ToastMessageHandler />
+      </Suspense>
+
       {/* 로그인 폼 헤더 영역 */}
       <div className='text-center w-full max-w-xl mb-8'>
         <h2 className='text-3xl font-extrabold mb-4'>SwimX</h2>

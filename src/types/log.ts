@@ -1,22 +1,63 @@
 // 수영 일기
 
-// ------------- 개인 기록 -------------
+// ------------- 개인 기록 (클라이언트 -> DB 저장용)-------------
 export interface SwimLog {
   date: string;
-  time: { start: number; end: number };
+  startTime: string;
+  endTime: string;
   pool: string;
   lane: number;
   intensity: string;
-  distance: number;
-  heartRate: { avg: number; max: number };
-  pace: { minute: number; seconds: number };
-  calories: number;
-  gear: string[];
+  // 거리 관련
+  distanceMode: 'total' | 'stroke';
+  distance?: number; // 총거리 입력값(total) or 계산 결과(stroke)
+  strokeInputMode?: 'manual' | 'lap';
+  strokeDistances?: Partial<Record<StrokeType, number>>; // 자유형, 접영 등
+  // 선택 항목 (건강데이터)
+  heartRate?: { avg?: number; max?: number };
+  pace?: { minute?: number; seconds?: number };
+  calories?: number;
+  gear?: string[];
   // 텍스트 에디터 추가
   content?: string; // tiptap HTML
   title?: string; // 요약 제목
   thumbnailUrl?: string | null; // 대표 이미지
 }
+
+// ------------- 개인 기록 (DB -> 클라이언트 저장용)-------------
+export interface SwimLogRaw {
+  date: string;
+  start_time: string;
+  end_time: string;
+  pool: string;
+  lane: number;
+  intensity: string;
+  distance_mode: 'total' | 'stroke';
+  distance?: number;
+  stroke_input_mode?: 'manual' | 'lap';
+  stroke_distances?: Record<string, number>;
+  heart_rate_avg?: number;
+  heart_rate_max?: number;
+  pace_minute?: number;
+  pace_seconds?: number;
+  calories?: number;
+  gear?: string[];
+  content?: string;
+  title?: string;
+  thumbnail_url?: string;
+}
+
+// ------------- 영법 타입 -------------
+export const STROKE_TYPES = [
+  'butterfly',
+  'backstroke',
+  'breaststroke',
+  'freestyle',
+  'kick',
+  'etc',
+] as const;
+
+export type StrokeType = (typeof STROKE_TYPES)[number];
 
 // ------------- 운동 강도 -------------
 export interface IntensityLevel {

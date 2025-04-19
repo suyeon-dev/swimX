@@ -39,6 +39,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         // 3. 인증 성공 : 사용자 정보 반환
+
         return {
           id: user.id,
           email: user.email,
