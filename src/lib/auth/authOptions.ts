@@ -29,21 +29,17 @@ export const authOptions: NextAuthOptions = {
           .single();
 
         if (!user || !user.password) {
-          console.log('사용자 없음!');
           return null;
         }
-
-        console.log('사용자 찾음: ', user);
 
         // 2. 비밀번호 비교
         const isValid = await bcrypt.compare(password, user.password);
         if (!isValid) {
-          console.log('비밀번호 불일치');
           return null;
         }
 
         // 3. 인증 성공 : 사용자 정보 반환
-        console.log('로그인 성공');
+
         return {
           id: user.id,
           email: user.email,

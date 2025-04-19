@@ -19,7 +19,6 @@ export default function DemoLoginButton() {
       router.push('/');
     } else {
       alert('데모 로그인 실패');
-      console.error('데모 로그인 실패:', res?.error);
     }
   };
 

@@ -34,8 +34,6 @@ export default function SignInForm() {
 
   // 로그인 버튼 클릭 시 실행되는 함수
   const onSubmit = async (values: SignInFormData) => {
-    console.log('로그인 정보: ', values);
-
     try {
       const response = await signIn('credentials', {
         ...values, // 이메일, 비번 전달
@@ -47,10 +45,7 @@ export default function SignInForm() {
       } else {
         router.push('/');
       }
-
-      console.log('로그인 응답: ', response);
-    } catch (error) {
-      console.error('로그인 에러: ', error);
+    } catch {
       alert('서버 오류로 로그인에 실패했습니다.');
     }
   };

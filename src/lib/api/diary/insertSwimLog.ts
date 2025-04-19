@@ -12,8 +12,6 @@ export const insertSwimLog = async (data: SwimLog) => {
     throw new Error('SUPABASE_SERVICE_ROLE_KEY is required');
   }
 
-  console.log('Service Role Key loaded:', serviceRoleKey);
-
   // 1. 로그인한 사용자 정보 가져오기
   const session = await getServerSession(authOptions);
 
@@ -83,7 +81,6 @@ export const insertSwimLog = async (data: SwimLog) => {
   // 3. 오류 핸들링
   if (!insertRes.ok) {
     const text = await insertRes.text();
-    console.error('Supabase 삽입 실패 응답:', text);
 
     if (text.includes('duplicate')) {
       throw new Error('이미 해당 시간대의 수영일기가 존재합니다.');
@@ -94,6 +91,6 @@ export const insertSwimLog = async (data: SwimLog) => {
 
   // 4. 성공 응답 반환
   const result = await insertRes.json();
-  console.log('REST insert 성공!!!', result);
+
   return result;
 };

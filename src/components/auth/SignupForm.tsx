@@ -36,8 +36,6 @@ export default function SignUpForm() {
 
   // 폼 제출 시 호출되는 함수
   const onSubmit = async (values: SignUpFormData) => {
-    console.log('회원가입 정보:', values);
-
     try {
       const response = await fetch('/api/auth/signup', {
         method: 'POST',
@@ -62,8 +60,7 @@ export default function SignUpForm() {
       // 성공 처리
       alert('회원가입이 완료되었습니다!');
       window.location.href = '/signIn'; // 로그인 페이지로 이동
-    } catch (error) {
-      console.error('회원가입 에러:', error);
+    } catch {
       alert('서버 오류로 회원가입에 실패했습니다.');
     }
   };

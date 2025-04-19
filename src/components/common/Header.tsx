@@ -6,17 +6,13 @@ import { IoSearch } from 'react-icons/io5';
 import { FaRegBell } from 'react-icons/fa6';
 import { GrLanguage } from 'react-icons/gr';
 import Navigation from './Navigation';
-// import Dropdown from './Dropdown';
 import HeaderAuthSection from '../auth/HeaderAuthSection';
-import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import MobileNavBar from './MobileNavBar';
 import HamburgerMenu from './HamburgerMenu';
 
 export default function Header() {
-  const { data: session, status } = useSession(); // 현재 로그인 세션 정보 조회
-  console.log('세션 정보: ', session);
-  console.log('세션 상태: ', status);
+  // const { data: session, status } = useSession(); // 현재 로그인 세션 정보 조회
 
   return (
     <div className='relative z-50'>
