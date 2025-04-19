@@ -134,6 +134,7 @@ export default function WritePage() {
               <div className='flex justify-end gap-2'>
                 <button
                   type='button'
+                  onClick={() => router.push('/diary/archive')}
                   className='border-1 border-gray-200 text-blue-600 px-4 py-1 rounded cursor-pointer'
                 >
                   취소
