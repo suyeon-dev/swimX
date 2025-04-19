@@ -20,7 +20,7 @@ export default function Header() {
 
   return (
     <div className='relative z-50'>
-      <header className='flex justify-between items-center px:6 sm:px-8 md:px-10 lg:px-20 py-4 md:py-6 lg:py-8 bg-white shadow-sm'>
+      <header className='flex justify-between items-center px:6 sm:px-8 md:px-10 lg:px-20 py-4 md:py-6 lg:py-8 bg-white'>
         {/* ---------------- 로고 및 서비스명 ----------------*/}
         <Link href='/'>
           <div className='flex items-center'>
