@@ -1,6 +1,6 @@
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth/authOptions';
-import { numberToTimeString } from '@/utils/format';
+// import { numberToTimeString } from '@/utils/format';
 import { SwimLog } from '@/types/log';
 
 // REST API 방식으로 Supabase에 수영일기 작성 요청
@@ -25,7 +25,7 @@ export const insertSwimLog = async (data: SwimLog) => {
 
   // 2-1. 일기 중복 여부 확인
   const date = data.date;
-  const startTime = numberToTimeString(data.startTime); // "15:02:00" 형식
+  const startTime = data.startTime; // "15:02:00" 형식
 
   const checkRes = await fetch(
     `${process.env.SUPABASE_PROJECT_URL}/rest/v1/swim_logs?user_id=eq.${userId}&date=eq.${date}&start_time=eq.${startTime}`,
@@ -64,10 +64,10 @@ export const insertSwimLog = async (data: SwimLog) => {
           lane: data.lane,
           intensity: data.intensity,
           distance: data.distance,
-          heart_rate_avg: data.heartRate.avg,
-          heart_rate_max: data.heartRate.max,
-          pace_minute: data.pace.minute,
-          pace_seconds: data.pace.seconds,
+          heart_rate_avg: data.heartRate?.avg ?? null,
+          heart_rate_max: data.heartRate?.max ?? null,
+          pace_minute: data.pace?.minute ?? null,
+          pace_seconds: data.pace?.seconds ?? null,
           calories: data.calories,
           gear: data.gear,
           content: data.content,

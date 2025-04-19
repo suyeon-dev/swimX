@@ -79,7 +79,7 @@ export function LogCard({ log }: Props) {
 
         {/* 장비, 썸네일, 일기 여부 */}
         <div className='flex gap-4 items-center mt-4'>
-          {log.gear?.length > 0 && (
+          {Array.isArray(log.gear) && log.gear.length > 0 && (
             <div className='flex gap-4 items-center mt-2'>
               {log.gear?.map((g) => {
                 const gearInfo = GEARS.find((item) => item.name === g);

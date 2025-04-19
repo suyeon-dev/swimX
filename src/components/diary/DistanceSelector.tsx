@@ -19,7 +19,7 @@ export default function DistanceSelector() {
     distanceMode === 'total'
       ? Number(watch('distance') ?? 0) // 총거리 직접 입력값 숫자로 변환하여 사용
       : Object.values(strokeDistances || {}).reduce(
-          (sum, val) => sum + Number(val || 0), // 각 영법별 거리값들 숫자로 변환 후 합산
+          (sum: number, val) => sum + Number(val || 0), // 각 영법별 거리값들 숫자로 변환 후 합산
           0 // 초기값 0
         );
 
@@ -144,13 +144,3 @@ export default function DistanceSelector() {
     </>
   );
 }
-
-// // 매핑
-// const strokeLabelKor: Record<string, string> = {
-//   butterfly: '접영',
-//   backstroke: '배영',
-//   breaststroke: '평영',
-//   freestyle: '자유형',
-//   kick: '킥판',
-//   etc: '기타',
-// };

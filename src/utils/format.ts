@@ -53,8 +53,8 @@ export const toSwimLog = (data: SwimFormData): SwimLog => {
 
   return {
     date: data.date,
-    startTime: timeStringToNumber(data.startTime),
-    endTime: timeStringToNumber(data.endTime),
+    startTime: data.startTime,
+    endTime: data.endTime,
     pool: data.pool ?? '',
     lane,
     intensity: intensityToText(data.intensity),
@@ -79,10 +79,10 @@ export const toSwimLog = (data: SwimFormData): SwimLog => {
 };
 
 // 보조 함수들
-const timeStringToNumber = (time: string): number => {
-  const [h, m] = time.split(':');
-  return Number(h) * 100 + Number(m);
-};
+// const timeStringToNumber = (time: string): number => {
+//   const [h, m] = time.split(':');
+//   return Number(h) * 100 + Number(m);
+// };
 
 const intensityToText = (value: number): string => {
   if (value <= 20) return '최하';

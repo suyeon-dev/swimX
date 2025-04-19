@@ -9,9 +9,9 @@ interface SwimLog {
   lane: number;
   intensity: string;
   distance: number;
-  heartRate: { avg: number; max: number };
-  pace: { minute: number; seconds: number };
-  calories: number;
+  heartRate?: { avg?: number; max?: number };
+  pace?: { minute?: number; seconds?: number };
+  calories?: number;
 }
 
 // (Todo)

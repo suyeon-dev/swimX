@@ -1,10 +1,10 @@
 // 수영 일기
 
-// ------------- 개인 기록 (DB 저장용)-------------
+// ------------- 개인 기록 (클라이언트 -> DB 저장용)-------------
 export interface SwimLog {
   date: string;
-  startTime: number;
-  endTime: number;
+  startTime: string;
+  endTime: string;
   pool: string;
   lane: number;
   intensity: string;
@@ -22,6 +22,29 @@ export interface SwimLog {
   content?: string; // tiptap HTML
   title?: string; // 요약 제목
   thumbnailUrl?: string | null; // 대표 이미지
+}
+
+// ------------- 개인 기록 (DB -> 클라이언트 저장용)-------------
+export interface SwimLogRaw {
+  date: string;
+  start_time: string;
+  end_time: string;
+  pool: string;
+  lane: number;
+  intensity: string;
+  distance_mode: 'total' | 'stroke';
+  distance?: number;
+  stroke_input_mode?: 'manual' | 'lap';
+  stroke_distances?: Record<string, number>;
+  heart_rate_avg?: number;
+  heart_rate_max?: number;
+  pace_minute?: number;
+  pace_seconds?: number;
+  calories?: number;
+  gear?: string[];
+  content?: string;
+  title?: string;
+  thumbnail_url?: string;
 }
 
 // ------------- 영법 타입 -------------

@@ -1,4 +1,4 @@
-import { SwimLog } from '@/types/log';
+import { SwimLog, SwimLogRaw } from '@/types/log';
 
 export async function getSwimLogsByUser(userId: string): Promise<SwimLog[]> {
   const res = await fetch(
@@ -14,7 +14,7 @@ export async function getSwimLogsByUser(userId: string): Promise<SwimLog[]> {
 
   if (!res.ok) throw new Error('수영일기 조회 실패');
 
-  const raw = await res.json();
+  const raw: SwimLogRaw[] = await res.json();
 
   // snake_case → camelCase 매핑
   const data: SwimLog[] = raw.map((item) => ({

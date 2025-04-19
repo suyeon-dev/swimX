@@ -6,11 +6,10 @@ import {
   SheetTrigger,
   SheetHeader,
   SheetTitle,
-  SheetClose,
 } from '@/components/ui/sheet'; // shadcn/ui의 Sheet 컴포넌트
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { IoMenu, IoClose } from 'react-icons/io5';
+import { IoMenu } from 'react-icons/io5';
 import Link from 'next/link';
 import { useState } from 'react';
 
