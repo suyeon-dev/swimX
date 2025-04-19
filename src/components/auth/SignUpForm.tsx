@@ -88,12 +88,12 @@ export default function SignUpForm() {
                       />
                     </FormControl>
 
-                    <Button
+                    {/* <Button
                       type='button'
                       className='bg-blue-500 text-white h-12 px-4'
                     >
                       인증하기
-                    </Button>
+                    </Button> */}
                   </div>
                   <p className='text-sm text-gray-500 mt-1 pl-1'>
                     SwimX 계정으로 사용될 이메일 주소입니다.

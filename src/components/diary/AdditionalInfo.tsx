@@ -28,54 +28,67 @@ export default function AdditionalInfo() {
 
       {/* 펼쳐진 내용 */}
       {isOpen && (
-        <div className='mt-6 grid grid-cols-[120px_1fr] gap-y-5 gap-x-4 items-center'>
+        <div className='mt-6 space-y-6'>
           {/* 심박수 */}
-          <label>심박수</label>
-          <div className='grid grid-cols-2 gap-4'>
-            <div className='flex items-center gap-2'>
-              <span>평균</span>
-              <Input
-                type='number'
-                {...register('heartRateAvg')}
-                className='w-24'
-              />
-              <span>BPM</span>
-            </div>
-            <div className='flex items-center gap-2'>
-              <span>최고</span>
-              <Input
-                type='number'
-                {...register('heartRateMax')}
-                className='w-24'
-              />
-              <span>BPM</span>
+          <div className='flex flex-col sm:grid sm:grid-cols-[120px_1fr] gap-y-2 gap-x-4'>
+            <label className='font-medium'>심박수</label>
+            <div className='grid grid-cols-2 gap-4'>
+              <div className='flex items-center gap-2'>
+                <span className='text-md'>평균</span>
+                <Input
+                  type='number'
+                  {...register('heartRateAvg')}
+                  className='w-24'
+                  placeholder='--'
+                />
+                <span className='text-sm'>BPM</span>
+              </div>
+              <div className='flex items-center gap-2'>
+                <span className='text-md'>최고</span>
+                <Input
+                  type='number'
+                  {...register('heartRateMax')}
+                  className='w-24'
+                  placeholder='--'
+                />
+                <span className='text-sm'>BPM</span>
+              </div>
             </div>
           </div>
 
           {/* 페이스 */}
-          <label>페이스</label>
-          <div className='flex items-center gap-2'>
-            <Input
-              type='number'
-              {...register('paceMinute')}
-              className='w-20'
-              placeholder='00'
-            />
-            <p>:</p>
-            <Input
-              type='number'
-              {...register('paceSeconds')}
-              className='w-20'
-              placeholder='00'
-            />
-            <span>/100m</span>
+          <div className='flex flex-col sm:grid sm:grid-cols-[120px_1fr] gap-y-2 gap-x-4'>
+            <label className='font-medium'>페이스</label>
+            <div className='flex items-center gap-2'>
+              <Input
+                type='number'
+                {...register('paceMinute')}
+                className='w-20'
+                placeholder='00'
+              />
+              <span>:</span>
+              <Input
+                type='number'
+                {...register('paceSeconds')}
+                className='w-20'
+                placeholder='00'
+              />
+              <span className=' text-muted-foreground'>/100m</span>
+            </div>
           </div>
 
           {/* 칼로리 */}
-          <label>칼로리</label>
-          <div className='flex items-center gap-2'>
-            <Input type='number' {...register('calories')} className='w-24' />
-            <span>KCAL</span>
+          <div className='flex flex-col sm:grid sm:grid-cols-[120px_1fr] gap-y-2 gap-x-4'>
+            <label className='font-medium'>칼로리</label>
+            <div className='flex items-center gap-2'>
+              <Input
+                type='number'
+                {...register('calories')}
+                className='w-24'
+                placeholder='--'
+              />
+              <span className=' text-muted-foreground'>KCAL</span>
+            </div>
           </div>
         </div>
       )}

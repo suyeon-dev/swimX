@@ -130,6 +130,7 @@ export default function WritePage() {
               <div className='flex justify-end gap-2'>
                 <button
                   type='button'
+                  onClick={() => router.push('/diary/archive')}
                   className='border-1 border-gray-200 text-blue-600 px-4 py-1 rounded cursor-pointer'
                 >
                   취소
@@ -147,47 +148,61 @@ export default function WritePage() {
             {/* 기본정보 (todo) 컨테이너 컴포넌트로 분리하기 */}
             <section className='border-1 border-gray-200 rounded-xl space-y-4 p-8 m-4'>
               <h2 className='text-xl font-bold mb-4'>기본정보</h2>
-              <div className='grid grid-cols-[120px_1fr] gap-y-5 gap-x-4 items-center'>
-                {/* 날짜 */}
+              {/* <div className='grid grid-cols-[120px_1fr] gap-y-5 gap-x-4 items-center'> */}
+
+              {/* 날짜 */}
+              <div className='flex flex-col sm:grid sm:grid-cols-[120px_1fr] gap-y-1 gap-x-4'>
                 <label>날짜*</label>
-                <Input
-                  type='date'
-                  className='input w-1/2'
-                  {...register('date', { required: true })}
-                />
-
-                {errors.date && (
-                  <p className='text-red-500 text-sm'>{errors.date.message}</p>
-                )}
-
-                {/* 수영시간 */}
-                <label>수영시간*</label>
-                <div className='flex items-center gap-5'>
+                <div>
                   <Input
-                    type='time'
-                    {...register('startTime')}
-                    className='w-32'
+                    type='date'
+                    className='input sm:w-1/2'
+                    {...register('date', { required: true })}
                   />
-                  <span>–</span>
-                  <Input
-                    type='time'
-                    {...register('endTime')}
-                    className='w-32'
-                  />
+
+                  {errors.date && (
+                    <p className='text-red-500 text-sm ml-2 mt-1'>
+                      {errors.date.message}
+                    </p>
+                  )}
                 </div>
-                {errors.startTime && (
-                  <p className='text-red-500 text-sm'>
-                    {errors.startTime.message}
-                  </p>
-                )}
-                {errors.endTime && (
-                  <p className='text-red-500 text-sm'>
-                    {errors.endTime.message}
-                  </p>
-                )}
+              </div>
 
-                {/* 수영장 */}
-                <label>수영장</label>
+              {/* 수영시간 */}
+              <div className='flex flex-col sm:grid sm:grid-cols-[120px_1fr] gap-y-1 gap-x-4'>
+                <label className='font-medium'>수영시간*</label>
+                <div>
+                  <div className='flex items-center gap-2'>
+                    <Input
+                      type='time'
+                      {...register('startTime')}
+                      className='w-36 min-w-30'
+                    />
+                    <span>–</span>
+                    <Input
+                      type='time'
+                      {...register('endTime')}
+                      className='w-36 min-w-30'
+                    />
+                  </div>
+                  <div className='flex flex-col sm:flex-row gap-1 sm:gap-4 '>
+                    {errors.startTime && (
+                      <p className='text-red-500 text-sm min-h-[20px] ml-2 mt-1'>
+                        {errors.startTime.message}
+                      </p>
+                    )}
+                    {errors.endTime && (
+                      <p className='text-red-500 text-sm min-h-[20px] ml-2 mt-1'>
+                        {errors.endTime.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* 수영장 */}
+              <div className='flex flex-col sm:grid sm:grid-cols-[120px_1fr] gap-y-1 gap-x-4'>
+                <label className='font-medium'>수영장</label>
                 <div className='flex items-center gap-2'>
                   <Input type='text' {...register('pool')} className='w-1/2' />
                   <TooltipProvider>
@@ -210,53 +225,61 @@ export default function WritePage() {
                     </Tooltip>
                   </TooltipProvider>
                 </div>
-                {errors.pool && (
-                  <p className='text-red-500 text-sm'>{errors.pool.message}</p>
-                )}
+              </div>
 
-                {/* 레인 + 운동강도 */}
+              {/* 레인 + 운동강도 */}
 
-                {/* PC, 태블릿 구조 (768 이상) */}
-                <label className='hidden sm:flex'>레인</label>
+              {/* PC, 태블릿 (768 이상) */}
+              <div className='grid grid-cols-[120px_1fr] gap-y-5 gap-x-4 items-center'>
+                <label className='hidden sm:flex font-medium'>레인</label>
                 <div className='hidden sm:flex items-center '>
                   <div className='flex-1 min-w-0'>
                     <LaneSelector />
                   </div>
                   <div className='flex items-center flex-1 min-w-0'>
-                    <label className='whitespace-nowrap'>운동강도</label>
+                    <label className='whitespace-nowrap font-medium'>
+                      운동강도
+                    </label>
                     <IntensitySlider />
                   </div>
                 </div>
+              </div>
 
-                {/* 모바일 구조 */}
-                <label className='flex sm:hidden'>레인</label>
+              {/* 모바일 구조 */}
+              <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+                <label className='flex sm:hidden font-medium'>레인</label>
                 <div className='flex flex-col gap-4 sm:hidden'>
                   <LaneSelector />
                 </div>
-                <label className='flex sm:hidden'>운동강도</label>
+                <label className='flex sm:hidden font-medium'>운동강도</label>
                 <div className='flex flex-col gap-4 sm:hidden py-2'>
                   <IntensitySlider />
                 </div>
+              </div>
 
-                {/* 수영 거리 */}
-                <div className='flex items-start gap-4 col-span-2'>
-                  <label className='w-[120px] pt-2  shrink-0'>수영거리*</label>
-                  <div className='w-full min-w-[400px]'>
-                    <DistanceSelector />
-                    {errors.distance && (
-                      <p className='text-red-500 text-sm mt-1'>
-                        {errors.distance.message}
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                {/* 장비*/}
-                <div className='flex items-start gap-4 col-span-2'>
-                  <label className='w-[120px] pt-2  shrink-0'>장비</label>
-                  <GearSelector />
+              {/* 수영 거리 */}
+              <div className='flex flex-col sm:grid sm:grid-cols-[120px_1fr] gap-y-1 gap-x-4'>
+                <label className='w-[120px] pt-2  shrink-0 font-medium'>
+                  수영거리*
+                </label>
+                <div className='w-full min-w-[400px]'>
+                  <DistanceSelector />
+                  {errors.distance && (
+                    <p className='text-red-500 text-sm mt-1'>
+                      {errors.distance.message}
+                    </p>
+                  )}
                 </div>
               </div>
+
+              {/* 장비*/}
+              <div className='flex flex-col sm:grid sm:grid-cols-[120px_1fr] gap-y-1 gap-x-4'>
+                <label className='w-[120px] pt-2  shrink-0 font-medium'>
+                  장비
+                </label>
+                <GearSelector />
+              </div>
+              {/* </div> */}
             </section>
 
             {/* 추가 정보 : 심박수, 페이스, 칼로리 */}

@@ -18,6 +18,7 @@ import {
 } from 'react-icons/md';
 import { FaLink, FaLinkSlash } from 'react-icons/fa6';
 import { uploadImage } from '@/lib/api/diary/uploadImage';
+import Placeholder from '@tiptap/extension-placeholder';
 
 // props 타입 정의
 // 부모에서 전달받은 제목, 본문 값과 setter 함수들
@@ -40,11 +41,15 @@ export default function Editor({ content, onContentChange }: Props) {
         },
       }), //이미지 사이즈 조정
       Link.configure({ openOnClick: false }), //링크 클릭 시 새 창 안 열리게 설정
+      Placeholder.configure({
+        placeholder: '사진과 함께 기록해보세요!',
+        emptyEditorClass: 'text-muted-foreground',
+      }),
     ],
     content, // 초기 컨텐츠 html
     editorProps: {
       attributes: {
-        class: `prose max-w-none min-h-[200px] focus:outline-none [&_img]:max-w-full [&_img]:h-auto [&_img]:max-h-[400px]`, // Tailwind 스타일 적용
+        class: `border border-gray-300 rounded prose max-w-none min-h-[200px] focus:outline-none [&_img]:max-w-full [&_img]:h-auto [&_img]:max-h-[400px]`, // Tailwind 스타일 적용
       },
     },
     onUpdate({ editor }) {

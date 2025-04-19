@@ -1,9 +1,10 @@
+import CommingSoon from '@/components/common/CommingSoon';
 import React from 'react';
 
 export default function MapPage() {
   return (
-    <div>
-      <h1>지도</h1>
-    </div>
+    <main className='max-w-4xl mx-auto px-4'>
+      <CommingSoon />
+    </main>
   );
 }
