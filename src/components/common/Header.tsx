@@ -6,7 +6,7 @@ import { IoSearch } from 'react-icons/io5';
 import { FaRegBell } from 'react-icons/fa6';
 import { GrLanguage } from 'react-icons/gr';
 import Navigation from './Navigation';
-import Dropdown from './Dropdown';
+// import Dropdown from './Dropdown';
 import HeaderAuthSection from '../auth/HeaderAuthSection';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -20,20 +20,25 @@ export default function Header() {
 
   return (
     <div className='relative z-50'>
-      <header className='flex justify-between items-center px:4 md:px-10 lg:px-20 py-4 md:py-6 lg:py-8 bg-white shadow-sm'>
+      <header className='flex justify-between items-center px:6 sm:px-8 md:px-10 lg:px-20 py-4 md:py-6 lg:py-8 bg-white shadow-sm'>
         {/* ---------------- 로고 및 서비스명 ----------------*/}
         <Link href='/'>
           <div className='flex items-center'>
             {/* <div className='w-8 h-8 bg-blue-500 rounded-full'></div> */}
             <Image
-              src={'/images/logo/logo.png'}
-              width={40}
-              height={40}
+              src={'/images/logo/logo-test.png'}
+              width={48}
+              height={48}
               alt={'logo'}
             ></Image>
-            <h1 className='text-2xl font-extrabold tracking-tighter ml-1 xs:hidden'>
-              SwimX
-            </h1>
+
+            <Image
+              src={'/images/logo/title.png'}
+              width={100}
+              height={32}
+              alt={'title'}
+              className='w-16 sm:w-18 md:w-24 lg:w-[100px]'
+            ></Image>
           </div>
         </Link>
 
