@@ -9,12 +9,14 @@ export function Providers({ children }: { children: React.ReactNode }) {
       {children}
       <ToastContainer
         position='top-center'
-        autoClose={3000} // 3초
+        autoClose={2000} // 2초
         hideProgressBar={false}
         newestOnTop
         closeOnClick
         pauseOnHover
         draggable
+        theme='dark'
+        style={{ top: '8rem' }}
       />
     </SessionProvider>
   );
