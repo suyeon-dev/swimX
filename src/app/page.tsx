@@ -1,5 +1,8 @@
 'use client';
 
+import Footer from '@/components/common/Footer';
+import HeroSection from '@/components/home/HeroSection';
+import ServiceIntroSection from '@/components/home/ServiceIntroSection';
 import { useSession } from 'next-auth/react';
 
 export default function Home() {
@@ -8,7 +11,9 @@ export default function Home() {
   console.log('세션 상태: ', status);
   return (
     <>
-      <h1>hello, swimX!</h1>
+      <HeroSection />
+      <ServiceIntroSection />
+      <Footer />
     </>
   );
 }

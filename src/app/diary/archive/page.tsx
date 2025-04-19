@@ -1,3 +1,4 @@
+import ArchiveHeader from '@/components/archive/ArchiveHeader';
 import ArchiveList from '@/containers/diary/ArchiveList';
 import { getSwimLogsByUser } from '@/lib/api/diary/getSwimLogs';
 import { authOptions } from '@/lib/auth/authOptions';
@@ -27,7 +28,8 @@ export default async function ArchivePage() {
 
       {/* 아카이브 본문 */}
       <section>
-        <h1 className='text-2xl font-bold mb-8 tracking-tight'>아카이브</h1>
+        {/* <h1 className='text-2xl font-bold mb-8 tracking-tight'>아카이브</h1> */}
+        <ArchiveHeader />
 
         {/* 클라이언트 컴포넌트에 데이터 전달 */}
         <ArchiveList logs={logs} />
