@@ -22,11 +22,14 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import AdditionalInfo from '@/components/diary/AdditionalInfo';
+import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 
 // (todo) SwimLogForm 분리
 export default function WritePage() {
   const { setLog } = useSwimLogStore(); // 전역 상태 업데이트용 함수
   const router = useRouter(); // 페이지 이동을 위한 라우터 객체
+  const { status } = useSession(); // loading/authenticated/unauthenticated
 
   // react-hook-form 설정(useForm hook): 기본값 및 zod 유효성 검증 연결
   const methods = useForm<SwimFormData>({
@@ -43,6 +46,17 @@ export default function WritePage() {
       thumbnailUrl: '', // 빈 문자열이면 controlled 유지됨
     },
   });
+
+  // 로그인 여부
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      showToast.info('로그인이 필요한 서비스입니다.');
+      router.replace('/signIn'); // replace로 뒤로가기 방지
+    }
+  }, [status, router]);
+
+  if (status === 'loading') return null; // 세션 상태 확인 중
+  if (status === 'unauthenticated') return null; // 이미 useEffect로 처리됨
 
   // react-hook-form에서 자주 쓰이는 메서드 추출
   const {

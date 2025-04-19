@@ -2,13 +2,15 @@ import ArchiveList from '@/containers/diary/ArchiveList';
 import { getSwimLogsByUser } from '@/lib/api/diary/getSwimLogs';
 import { authOptions } from '@/lib/auth/authOptions';
 import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
 
 export default async function ArchivePage() {
   // 1. 세션에서 사용자 정보 가져오기
   const session = await getServerSession(authOptions);
 
+  // 로그인 안 된 경우 즉시 서버 리디렉션
   if (!session?.user?.id) {
-    return <div>로그인이 필요합니다</div>;
+    redirect('/signIn?message=로그인이 필요한 서비스입니다.');
   }
 
   const userId = session.user.id;
