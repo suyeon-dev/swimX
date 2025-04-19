@@ -45,7 +45,7 @@ export default function IntensitySlider() {
       <div className='flex items-center gap-2'>
         {/* 운동 강도 라벨 + 텍스트 */}
         {/* <span className='font-medium whitespace-nowrap'>운동강도</span> */}
-        <span className='text-blue-600 font-semibold w-10 flex justify-center'>
+        <span className='text-blue-600 font-bold w-10 items-center flex justify-center ml-2'>
           {label}
         </span>
 
