@@ -7,7 +7,7 @@ import { IoLocationSharp } from 'react-icons/io5';
 import { getDurationFormat } from '@/utils/format';
 import { toOneDecimal } from '@/utils/math';
 import { GEARS } from '@/constants/gear';
-import { IoChevronForward } from 'react-icons/io5';
+// import { IoChevronForward } from 'react-icons/io5';
 
 interface Props {
   log: SwimLog;
@@ -27,12 +27,12 @@ export function LogCard({ log }: Props) {
               <span> ({log.lane}m)</span>
             </div>
           </div>
-          <button className='flex items-center text-sm cursor-pointer hover:underline transition'>
+          {/* <button className='flex items-center text-sm cursor-pointer hover:underline transition'>
             더보기
             <div className='flex items-center justify-start bg-slate-100 rounded-full w-4 h-4 ml-1'>
               <IoChevronForward className='font-bold ml-1 w-4 h-4 text-muted-foreground' />
             </div>
-          </button>
+          </button> */}
         </div>
 
         {/* 일기 제목 */}

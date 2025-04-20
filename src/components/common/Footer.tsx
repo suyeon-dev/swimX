@@ -1,5 +1,3 @@
-'use client';
-
 import { Button } from '@/components/ui/button';
 import { FaBloggerB, FaGithub } from 'react-icons/fa';
 import { SiNaver, SiGmail } from 'react-icons/si';

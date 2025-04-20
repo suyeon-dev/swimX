@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import HeroImage from './HeroImage';
 import { useSession } from 'next-auth/react';
+import { ToastMessageHandler } from '../common/Toast';
 
 export default function HeroSection() {
   const { data: session } = useSession(); // 현재 로그인 세션 정보 조회
@@ -11,6 +12,7 @@ export default function HeroSection() {
 
   return (
     <>
+      <ToastMessageHandler />
       <section className='relative w-full py-20 md:min-h-[70vh] flex flex-col justify-center items-center px-4 text-center bg-gradient-to-b from-white via-[#f4f8ff] to-[#eaf3ff]'>
         {/* 1. 문구 */}
         <div className='z-10'>

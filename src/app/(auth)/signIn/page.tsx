@@ -37,7 +37,7 @@ export default function SignInPage() {
           회원가입
         </Link>
         <span className='text-gray-300'>|</span>
-        <Link href='/reset' className='hover:underline'>
+        <Link href='/reset' className='cursor-not-allowed text-gray-300'>
           아이디/비밀번호 찾기
         </Link>
       </div>

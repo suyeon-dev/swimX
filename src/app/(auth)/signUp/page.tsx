@@ -4,7 +4,7 @@ import { GoArrowUpRight } from 'react-icons/go';
 
 export default function SignUpPage() {
   return (
-    <section className='flex flex-col items-center justify-center px-4 py-12 min-h-screen'>
+    <section className='flex flex-col items-center justify-center px-4 pt-0 min-h-screen'>
       <div className='w-full max-w-xl'>
         {/* 회원가입 페이지 상단 헤더 */}
         <div className='text-center pb-6'>
