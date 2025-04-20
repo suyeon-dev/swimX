@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'SwimX | 수영 기록 관리의 시작',
-  metadataBase: new URL('https://swimx.vercel.app'),
+  metadataBase: new URL('https://swim-x.vercel.app'),
   description:
     '쉽고 간편한 수영 기록 서비스, SwimX에서 나만의 수영 일기를 아카이빙해보세요!',
   icons: {
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     title: 'SwimX | 수영 기록 관리의 시작',
     description:
       '쉽고 간편한 수영 기록 서비스, SwimX에서 수영 일기와 통계를 한번에!',
-    url: 'https://swimx.vercel.app',
+    url: 'https://swim-x.vercel.app',
     siteName: 'SwimX',
     images: [
       {
