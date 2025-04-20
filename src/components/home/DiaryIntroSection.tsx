@@ -1,5 +1,3 @@
-'use client';
-
 import Image from 'next/image';
 
 export default function ServiceIntroSection() {
@@ -24,10 +22,10 @@ export default function ServiceIntroSection() {
         </div>
 
         {/* 왼쪽 이미지 */}
-        <div className='relative w-[260px] md:w-[340px] z-2 shrink-0 mb-12 md:mb-0'>
+        <div className='relative w-[260px] md:w-[340px] z-2 shrink-0 mb-12 md:mb-0 '>
           <Image
             src='/images/home/mobile-left.png'
-            alt='일기 작성 페이지'
+            alt='수영일기 상단'
             width={320}
             height={640}
             className='w-full h-auto object-contain'
@@ -47,7 +45,7 @@ export default function ServiceIntroSection() {
         >
           <Image
             src='/images/home/mobile-right.png'
-            alt='아카이브'
+            alt='수영일기 하단'
             width={320}
             height={640}
             className='w-full h-auto object-contain'

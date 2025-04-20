@@ -262,7 +262,7 @@ export default function WritePage() {
                 <label className='w-[120px] pt-2  shrink-0 font-medium'>
                   수영거리*
                 </label>
-                <div className='w-full min-w-[400px]'>
+                <div className='w-full min-w-[320px]'>
                   <DistanceSelector />
                   {errors.distance && (
                     <p className='text-red-500 text-sm mt-1'>
