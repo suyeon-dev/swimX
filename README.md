@@ -1,13 +1,13 @@
 # Swim X
 
-![og-image](https://github.com/user-attachments/assets/b416ec34-5110-4d11-9356-201d519ad2fc)
+<image src='https://swim-x.vercel.app/meta/og-image.png'>
 
 <br/>
 
 ## 💡 서비스 소개
 
 <p align='center'>
-  <image src='https://github.com/user-attachments/assets/2135901c-aa5b-48f1-8e8d-8b26b0b060be' width=200>
+  <image src='https://swim-x.vercel.app/images/logo/logo-button.png' width=200>
 <br />
   <span>
 <a href='https://swim-x.vercel.app'>SwimX 바로가기</a>
@@ -51,7 +51,7 @@ SwimX는 수영인의 하루를 숫자와 감정으로 함께 기록하는 <b>�
 <br />
 <br />
 
-## 기술 스택
+## ⚙️ 기술 스택
 
 | 영역         | 기술                                                                                       |
 | ------------ | ------------------------------------------------------------------------------------------ |
